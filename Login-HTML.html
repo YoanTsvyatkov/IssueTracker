@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="LoginStyle.css">
+</head>
+
+<body>
+
+<div class="logo">
+<h2>Issue Tracker</h2>
+</div>
+
+<form action="/action_page.php" method="post">
+  <div class="container">
+      <h2>Log in</h2> 
+
+    <label for="uname"><b>Email</b></label>
+    <input type="text" placeholder="Enter email" name="uname" required>
+
+    <label for="psw"><b>Password</b></label>
+    <input type="password" placeholder="Enter Password" name="psw" required>
+        
+    <button type="submit">Log in</button>
+    <label>
+      <input type="checkbox" checked="checked" name="remember"> Remember me
+    </label>
+
+    <br>
+    <button type="button" class="cancelbtn" >Cancel</button>
+    <span class="psw"><a href="forgetPSW.html">Forgot password?</a></span>
+
+  </div>
+
+</form>
+</body>
+</html>
