@@ -1,0 +1,67 @@
+body {font-family: Arial, Helvetica, sans-serif;}
+form {border: 17px ;
+    box-sizing: border-box;
+  width: 400px;
+  height: 400px;
+  position: fixed;
+  top: 30%;
+  left: 40%;
+  margin-top: -50px;
+  margin-left: -70px;
+}
+
+input[type=text], input[type=password] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 15px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+button {
+  background-color: #233975;
+  color: white;
+  padding: 14px 20px;
+  margin: 30px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  border-radius: 6px;
+
+
+}
+
+button:hover {
+  opacity: 0.8;
+}
+.container {
+  padding: 20px;
+  background-color: white;
+  border-radius: 6px;
+  color: #5E6C84;
+}
+.logo{
+  display: flex;
+align-items: center;
+justify-content: center;
+  color: white;
+  font-size: 25px;
+  height: 100px;
+  font-family: Helvetica, sans-serif;
+
+}
+body {
+  background: linear-gradient(-100deg, #A2F2F1 0%, #B19AFE 100%);
+  }
+
+/* Change styles for span and cancel button on extra small screens */
+@media screen and (max-width: 300px) {
+  span.psw {
+     display: block;
+     float: none;
+  }
+  .cancelbtn {
+     width: 100%;
+  }
+}
