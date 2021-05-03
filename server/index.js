@@ -1,21 +1,20 @@
-const express = require("express")
+import auth from './routers/auth-controller.js'
+import express from 'express'
+import dotenv from 'dotenv'
+
+dotenv.config()
 const app = express()
-const port = 3000
 
-app.use(express.json())
+initRouthers('/api/', auth)
 
-app.get("/",(req, res) => {
-    res.send("Hello world");
-})
-
-app.post("", (req, res) => {
-
-})
-
-app.all("*", (req, res) => {
+app.all('/*', (req, res) => {
     res.sendStatus(404);
 })
 
-app.listen(port, () => {
-    console.log(`Started server on port ${port}`)
+app.listen(process.env.PORT, () => {
+    console.log(`Started server`);
 })
+
+function initRouthers(path, routhers){
+    app.use(path, routhers);
+}
