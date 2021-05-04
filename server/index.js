@@ -2,6 +2,7 @@ import auth from './routers/auth-controller.js'
 import express from 'express'
 import dotenv from 'dotenv'
 import cors from 'cors'
+import verifyToken from './middlewares/veryfy-user.js'
 
 dotenv.config()
 
