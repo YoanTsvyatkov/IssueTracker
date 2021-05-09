@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script type="text/javascript" src="ListProject.js"></script>
+<link rel="stylesheet" href="ListProject.css">
+
+</head>
+<body>
+    <div class="header">
+        <h2 >Projects</h2>
+      </div>
+      <div class="container">
+<div id="wrapper">
+<table cellspacing=2 cellpadding=5 id="data_table" >
+<tr>
+    <th>Project name</th>
+    <th>Start date</th>
+    <th>Target end date</th>
+</tr>
+<form action="/action_page.php">
+<tr>
+<td><input type="text" id="new_name"></td>
+<td><input type="date" id="new_end"></td>
+<td><input type="date" id="new_start"></td>
+<td><input type="button" class="add" onclick="add_row();" value="Add Project"></td>
+
+<form action="/action_page.php">
+</tr>
+
+</table>
+</div>
+</div>
+
+</body>
+</html>
