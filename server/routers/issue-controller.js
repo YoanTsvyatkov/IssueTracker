@@ -27,7 +27,7 @@ issueController.post("/issue", verifyToken, (req, res) => {
   res.send(issue);
 });
 
-issueController.put("/update-issue/:id", (req, res) => {
+issueController.put("/update-issue/:id", verifyToken, (req, res) => {
   const possition = checkIfIssueExist(req.params.id);
   if (possition == -1) {
     res.sendStatus(400);
