@@ -1,5 +1,7 @@
 import { Router } from "express";
 import verifyToken from "../middlewares/veryfy-user.js";
+import Issue from "../models/issue.js";
+import User from "../models/user.js";
 
 const issueController = Router();
 
@@ -8,26 +10,30 @@ const issues = [];
 issueController.post("/issue", verifyToken, (req, res) => {
   if (
     !req.body.title ||
-    !req.body.assignee ||
-    !req.body.priority ||
-    !req.body.id
+    !req.body.priority
   ) {
     return res.sendStatus(400);
   }
 
-  const issue = {
-    id: req.body.id,
+  const issueDocument = {
     title: req.body.title,
-    assignee: req.body.assignee,
+    description: req.body.description || "",
     priority: req.body.priority,
-  };
+    assignee: req.body.assignee || {}
+  }
 
-  issues.push(issue);
+  const issue = new Issue(issueDocument)
 
-  res.send(issue);
+  issue.save()
+    .then(() => {
+      res.status(201).send(issueDocument)
+    })
+    .catch(err => {
+      res.status(500).send(err);
+    })
 });
 
-issueController.put("/update-issue/:id", verifyToken, (req, res) => {
+issueController.put("/issue/:id", verifyToken, (req, res) => {
   const possition = checkIfIssueExist(req.params.id);
   if (possition == -1) {
     res.sendStatus(400);
@@ -52,7 +58,7 @@ issueController.get("/issue/:id", verifyToken, (req, res) => {
   }
 });
 
-issueController.delete("/delete-issue/:id", verifyToken, (req, res) => {
+issueController.delete("/issue/:id", verifyToken, (req, res) => {
   const possition = checkIfIssueExist(req.params.id);
   if (possition != -1) {
     issues.splice(possition, 1);
