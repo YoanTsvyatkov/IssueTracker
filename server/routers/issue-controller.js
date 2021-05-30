@@ -5,8 +5,6 @@ import User from "../models/user.js";
 
 const issueController = Router();
 
-const issues = [];
-
 issueController.post("/issue", verifyToken, (req, res) => {
   if (
     !req.body.title ||
@@ -19,7 +17,8 @@ issueController.post("/issue", verifyToken, (req, res) => {
     title: req.body.title,
     description: req.body.description || "",
     priority: req.body.priority,
-    assignee: req.body.assignee || {}
+    assignee: req.body.assignee || {},
+    projectId: req.body.projectId
   }
 
   const issue = new Issue(issueDocument)
@@ -34,47 +33,65 @@ issueController.post("/issue", verifyToken, (req, res) => {
 });
 
 issueController.put("/issue/:id", verifyToken, (req, res) => {
-  const possition = checkIfIssueExist(req.params.id);
-  if (possition == -1) {
-    res.sendStatus(400);
-  }
+  Issue.findByIdAndUpdate(
+    { 
+      _id : req.params.id
+    }, 
+      req.body,
+    { 
+      new: true, 
+      runValidators: true
+    }
+  ).then(issue => {
+      if(!issue){
+        return res.sendStatus(404);
+      }
 
-  issues[possition].title = req.body.title;
-  issues[possition].assignee = req.body.assignee;
-  issues[possition].priority = req.body.priority;
-  res.send(issues[possition]);
+      return res.send(issue);
+   }
+   ).catch(err => {
+      res.status(500).send(err); 
+   });
 });
 
-issueController.get("/issue", verifyToken, (req, res) => {
-  res.send(issues);
+issueController.get("/issue/:projectId", verifyToken, (req, res) => {
+  Issue.find({
+    projectId: req.params.projectId
+  })
+      .then(issues  => {
+        res.send(issues);
+      })
+      .catch(err => {
+        res.status(500).send(err);
+      })
 });
 
 issueController.get("/issue/:id", verifyToken, (req, res) => {
-  const possition = checkIfIssueExist(req.params.id);
-  if (possition != -1) {
-    res.send(issues[possition]);
-  } else {
-    res.sendStatus(400);
-  }
+  Issue.findById(req.params.id)
+    .then(issue => {
+      if(!issue){
+        return res.sendStatus(404);
+      }
+
+      return res.send(issue);
+    })
+    .catch(err => {
+      return res.status(500).send(err);
+    })
 });
 
 issueController.delete("/issue/:id", verifyToken, (req, res) => {
-  const possition = checkIfIssueExist(req.params.id);
-  if (possition != -1) {
-    issues.splice(possition, 1);
-    res.send(issues);
-  } else {
-    res.sendStatus(400);
-  }
-});
+    Issue.findByIdAndDelete(
+      req.params.id
+    ).then(issue => {
+      if(!issue){
+        return res.sendStatus(404);
+      }
 
-function checkIfIssueExist(id) {
-  for (let possition = 0; possition < issues.length; possition++) {
-    if (issues[possition].id == id) {
-      return possition;
-    }
-  }
-  return -1;
-}
+      return res.send(issue);
+    }).catch(err => {
+      return res.status(500).send(err);
+    });
+});
 
 export default issueController;

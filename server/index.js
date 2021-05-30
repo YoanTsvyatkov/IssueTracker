@@ -1,9 +1,9 @@
 import auth from "./routers/auth-controller.js";
 import issues from "./routers/issue-controller.js";
+import project from "./routers/project-controller.js";
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
-import verifyToken from "./middlewares/veryfy-user.js";
 import mongoose from "mongoose";
 
 dotenv.config();  
@@ -11,12 +11,12 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-function initRouthers(path, routhers) {
+function initRouters(path, routhers) {
   app.use(path, routhers);
 }
 
+initRouters("/api/", [auth, issues, project]);
 
-initRouthers("/api/", [auth, issues]);
 app.all("/*", (req, res) => {
   res.sendStatus(404);
 });

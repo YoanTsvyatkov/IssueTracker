@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import dotenv from "dotenv";
 import User from "../models/user.js"
+import signToken from "../utils/jwt.js"
 
 const authController = Router();
 
@@ -25,12 +26,7 @@ authController.post("/login", (req, res) => {
                     return res.sendStatus(401).send();
                   }
                 
-                  const token = jwt.sign(
-                    { email: req.body.email, password: req.body.password },
-                    process.env.SECRET,
-                    { expiresIn: "24h" }
-                  );
-
+                  const token = signToken(req.body.email, req.body.password, "24h")
                   res.send({ token: token });
               })
               .catch(err => {
@@ -49,7 +45,7 @@ authController.post("/register", (req, res) => {
   User.findOne({ email: req.body.email })
     .then((user) => {
       if(user){
-        return res.status(400).send("Email address is already taken");
+        return res.sendStatus(400);
       }
 
       bcrypt.hash(req.body.password, 10)
@@ -61,15 +57,7 @@ authController.post("/register", (req, res) => {
             });
             
             newUser.save().then(() => {
-                      const token = jwt.sign(
-                        {
-                        email: newUser.email, 
-                        password: newUser.password 
-                        },
-                        process.env.SECRET,
-                        { expiresIn: "24h" }
-                      );
-                
+                      const token = signToken(newUser.email, newUser.password, "24h");                
                       return res.send({ token: token });
             })
             .catch(err => res.send(err))

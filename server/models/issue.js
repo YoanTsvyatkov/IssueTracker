@@ -12,9 +12,17 @@ const issueSchema = new Schema({
         type: String,
         required: true
     },
+    projectId: {
+        type: String,
+        required: true
+    },
     assignee: {
-        firstName: String,
-        lastName: String,
+        firstName: {
+            type: String
+        },
+        lastName: {
+            type: String
+        }
     }
 });
 
