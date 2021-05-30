@@ -11,13 +11,8 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
-    firstName: String,
-    lastName: String,
+    name: String
 });
-
-userSchema.virtual('fullName').get(function() {
-    return this.name.first + ' ' + this.name.last;
-  });
 
 const User = model('User', userSchema);
 

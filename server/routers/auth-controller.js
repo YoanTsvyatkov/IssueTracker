@@ -1,7 +1,5 @@
 import { Router } from "express";
-import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
-import dotenv from "dotenv";
 import User from "../models/user.js"
 import signToken from "../utils/jwt.js"
 
@@ -38,7 +36,7 @@ authController.post("/login", (req, res) => {
 });
 
 authController.post("/register", (req, res) => {
-  if (!req.body.email || !req.body.password) {
+  if (!req.body.email || !req.body.password || !req.body.name) {
     return res.sendStatus(400);
   }
 
@@ -53,14 +51,16 @@ authController.post("/register", (req, res) => {
 
             const newUser = new User({
               email: req.body.email,
-              password: password
+              password: password,
+              name: req.body.name
             });
             
-            newUser.save().then(() => {
+            newUser.save()
+            .then(() => {
                       const token = signToken(newUser.email, newUser.password, "24h");                
                       return res.send({ token: token });
             })
-            .catch(err => res.send(err))
+            .catch(err => res.status(500).send(err))
           })
           .catch(err => res.send(err));
     })

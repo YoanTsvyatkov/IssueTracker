@@ -28,8 +28,6 @@ button {
   cursor: pointer;
   width: 100%;
   border-radius: 6px;
-
-
 }
 
 button:hover {
@@ -69,7 +67,6 @@ span.psw {
   font-size: 25px;
   height: 100px;
   font-family: Helvetica, sans-serif;
-
 }
 body {
   background: linear-gradient(to top, #f3e7e9 0%, #e3eeff 99%, #e3eeff 100%);
@@ -87,4 +84,15 @@ body {
   .cancelbtn {
      width: 100%;
   }
+}
+
+#error{
+  display:none;
+  background-color: #FFCCCC;
+  padding: 5px;
+}
+
+#error-message{
+  color: black;
+  text-align: center;
 }
