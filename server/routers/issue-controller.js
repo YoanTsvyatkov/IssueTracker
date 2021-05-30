@@ -1,74 +1,97 @@
 import { Router } from "express";
 import verifyToken from "../middlewares/veryfy-user.js";
+import Issue from "../models/issue.js";
+import User from "../models/user.js";
 
 const issueController = Router();
-
-const issues = [];
 
 issueController.post("/issue", verifyToken, (req, res) => {
   if (
     !req.body.title ||
-    !req.body.assignee ||
-    !req.body.priority ||
-    !req.body.id
+    !req.body.priority
   ) {
     return res.sendStatus(400);
   }
 
-  const issue = {
-    id: req.body.id,
+  const issueDocument = {
     title: req.body.title,
-    assignee: req.body.assignee,
+    description: req.body.description || "",
     priority: req.body.priority,
-  };
-
-  issues.push(issue);
-
-  res.send(issue);
-});
-
-issueController.put("/update-issue/:id", (req, res) => {
-  const possition = checkIfIssueExist(req.params.id);
-  if (possition == -1) {
-    res.sendStatus(400);
+    assignee: req.body.assignee || {},
+    projectId: req.body.projectId
   }
 
-  issues[possition].title = req.body.title;
-  issues[possition].assignee = req.body.assignee;
-  issues[possition].priority = req.body.priority;
-  res.send(issues[possition]);
+  const issue = new Issue(issueDocument)
+
+  issue.save()
+    .then(() => {
+      res.status(201).send(issueDocument)
+    })
+    .catch(err => {
+      res.status(500).send(err);
+    })
 });
 
-issueController.get("/issue", verifyToken, (req, res) => {
-  res.send(issues);
+issueController.put("/issue/:id", verifyToken, (req, res) => {
+  Issue.findByIdAndUpdate(
+    { 
+      _id : req.params.id
+    }, 
+      req.body,
+    { 
+      new: true, 
+      runValidators: true
+    }
+  ).then(issue => {
+      if(!issue){
+        return res.sendStatus(404);
+      }
+
+      return res.send(issue);
+   }
+   ).catch(err => {
+      res.status(500).send(err); 
+   });
+});
+
+issueController.get("/issue/:projectId", verifyToken, (req, res) => {
+  Issue.find({
+    projectId: req.params.projectId
+  })
+      .then(issues  => {
+        res.send(issues);
+      })
+      .catch(err => {
+        res.status(500).send(err);
+      })
 });
 
 issueController.get("/issue/:id", verifyToken, (req, res) => {
-  const possition = checkIfIssueExist(req.params.id);
-  if (possition != -1) {
-    res.send(issues[possition]);
-  } else {
-    res.sendStatus(400);
-  }
+  Issue.findById(req.params.id)
+    .then(issue => {
+      if(!issue){
+        return res.sendStatus(404);
+      }
+
+      return res.send(issue);
+    })
+    .catch(err => {
+      return res.status(500).send(err);
+    })
 });
 
-issueController.delete("/delete-issue/:id", verifyToken, (req, res) => {
-  const possition = checkIfIssueExist(req.params.id);
-  if (possition != -1) {
-    issues.splice(possition, 1);
-    res.send(issues);
-  } else {
-    res.sendStatus(400);
-  }
-});
+issueController.delete("/issue/:id", verifyToken, (req, res) => {
+    Issue.findByIdAndDelete(
+      req.params.id
+    ).then(issue => {
+      if(!issue){
+        return res.sendStatus(404);
+      }
 
-function checkIfIssueExist(id) {
-  for (let possition = 0; possition < issues.length; possition++) {
-    if (issues[possition].id == id) {
-      return possition;
-    }
-  }
-  return -1;
-}
+      return res.send(issue);
+    }).catch(err => {
+      return res.status(500).send(err);
+    });
+});
 
 export default issueController;
