@@ -1,6 +1,4 @@
 import jwt from 'jsonwebtoken'
-import dotenv from 'dotenv'
-
 
 function verifyToken(req, res, next){ 
     if (!req.headers.authorization || req.headers.authorization.split(' ').length <= 1 || 

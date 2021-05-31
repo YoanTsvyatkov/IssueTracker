@@ -17,6 +17,9 @@ const issueSchema = new Schema({
         required: true
     },
     assignee: {
+        assigneeId:{
+            type: String
+        },
         firstName: {
             type: String
         },
@@ -25,14 +28,6 @@ const issueSchema = new Schema({
         }
     }
 });
-
-issueSchema.methods.getUserFullName = function(){
-    if(!assignee){
-        return "Unassigned";
-    }
-
-    return assignee.firstName + " " + assignee.lastName;
-}
 
 const Issue = model('Issue', issueSchema);
 

@@ -1,7 +1,8 @@
-import { Router } from "express";
-import verifyToken from "../middlewares/veryfy-user.js";
+import express from "express";
+import verifyToken from "../middlewares/verify-token.js";
 import Issue from "../models/issue.js";
-import User from "../models/user.js";
+
+const {Router} = express;
 
 const issueController = Router();
 

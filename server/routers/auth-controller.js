@@ -1,7 +1,9 @@
-import { Router } from "express";
+import express from "express";
 import bcrypt from "bcryptjs";
-import User from "../models/user.js"
-import signToken from "../utils/jwt.js"
+import User from "../models/user.js";
+import signToken from "../utils/jwt.js";
+
+const {Router} = express;
 
 const authController = Router();
 
@@ -57,12 +59,18 @@ authController.post("/register", (req, res) => {
             
             newUser.save()
             .then(() => {
-                      const token = signToken(newUser.email, newUser.password, "24h");                
+                      const token = signToken(newUser.email, 
+                                              newUser.password,
+                                              "24h");                
                       return res.send({ token: token });
             })
-            .catch(err => res.status(500).send(err))
+            .catch(err => {
+              return res.status(500).send(err);
+            })
           })
-          .catch(err => res.send(err));
+          .catch(err => {
+            return res.send(err);
+          });
     })
     .catch((err) => {
       res.status(500).send(err);

@@ -1,6 +1,7 @@
 import auth from "./routers/auth-controller.js";
 import issues from "./routers/issue-controller.js";
 import project from "./routers/project-controller.js";
+import user from "./routers/user-controller.js";
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
@@ -15,7 +16,7 @@ function initRouters(path, routhers) {
   app.use(path, routhers);
 }
 
-initRouters("/api/", [auth, issues, project]);
+initRouters("/api/", [auth, issues, project,user]);
 
 app.all("/*", (req, res) => {
   res.sendStatus(404);

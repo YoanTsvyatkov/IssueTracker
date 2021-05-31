@@ -1,10 +1,11 @@
-import { Router } from "express";
-import verifyToken from "../middlewares/veryfy-user.js";
+import express from "express";
+import verifyToken from "../middlewares/verify-token.js";
 import Project from "../models/project.js";
 import upload from "../utils/multer.js";
 import fs from "fs";
 import path from "path";
 
+const {Router} = express;
 
 const projectController = Router();
 
