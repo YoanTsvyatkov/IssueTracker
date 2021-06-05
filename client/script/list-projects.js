@@ -38,7 +38,7 @@ var crudApp = new function () {
             // *** CANCEL OPTION ***
             tr.appendChild(this.td);
             var lblCancel = document.createElement('label');
-            lblCancel.innerHTML = '✖';
+            lblCancel.innerHTML = 'X';
             lblCancel.setAttribute('onclick', 'crudApp.Cancel(this)');
             lblCancel.setAttribute('style', 'display:none;');
             lblCancel.setAttribute('title', 'Cancel');
