@@ -9,9 +9,14 @@ const {Router} = express;
 
 const projectController = Router();
 
-projectController.post("/project", verifyToken, upload.single("image"), (req, res) => {
+projectController.post("/project", upload.single("image"), (req, res) => {
   const name = req.body.projectName;
-  const fileName = req.file.filename;
+  let fileName;
+
+  if(req.file){
+      fileName = req.file.filename;
+  }
+  
   const statuses = req.body.statuses || [];
 
   if(!name || !fileName){
@@ -28,11 +33,21 @@ projectController.post("/project", verifyToken, upload.single("image"), (req, re
       project.projectName = name;
       project.statuses = statuses;
       project.image.data = data;
-      project.image.contentType = 'image/png';
+      project.image.contentType = req.file.mimetype;
 
       project.save()
         .then(() => {
-          return res.status(201).send(project);
+          const thumb = data.toString('base64');
+          const result = {
+            "id": project.id,
+            "projectName": project.projectName,
+            "image": {
+              "contentType": req.file.mimetype,
+              "img": thumb
+            },
+            "statuses": project.status
+          }
+          return res.status(201).send(result);
         })
         .catch(err => {
          return res.status(500).send(err);
@@ -40,7 +55,7 @@ projectController.post("/project", verifyToken, upload.single("image"), (req, re
     })
 });
 
-projectController.put("/project/:id", verifyToken,  upload.single("image"), (req, res) => {
+projectController.put("/project/:id",  upload.single("image"), (req, res) => {
     let fileName;
     if(req.file){
       fileName = req.file.filename;
@@ -85,7 +100,18 @@ projectController.put("/project/:id", verifyToken,  upload.single("image"), (req
       
             project.save()
               .then(() => {
-                return res.status(201).send(project);
+                const thumb =  data.toString('base64');
+                const result = {
+                  "id": project.id,
+                  "projectName": project.projectName,
+                  "image": {
+                    "contentType": req.file.mimetype,
+                    "img": thumb
+                  },
+                  "statuses": project.status
+                }
+
+                return res.status(201).send(result);
               })
               .catch(err => {
                return res.status(500).send(err);
@@ -99,17 +125,30 @@ projectController.put("/project/:id", verifyToken,  upload.single("image"), (req
 });
 
 
-projectController.get("/project", verifyToken, (req, res) => {
-  Project.find({})
-      .then(projects  => {
-        res.send(projects);
-      })
-      .catch(err => {
-        res.status(500).send(err);
-      })
+projectController.get("/project", async (req, res) => {
+  try{
+    const list = await Project.find({})
+    const result = list.map(project => {
+              const thumb = project.image.data.toString('base64');
+              const newProject = {
+                "id": project.id,
+                "projectName": project.projectName,
+                "image": {
+                  "img": thumb,
+                  "contentType": project.image.contentType
+                },
+                "statuses": project.status
+              }
+              return newProject;
+        });
+
+    res.send(result);
+  }catch(err){
+    res.status(500).send(err);
+  }
 });
 
-projectController.delete('/project/:id', verifyToken, (req, res) => {
+projectController.delete('/project/:id', (req, res) => {
   Project.findByIdAndDelete(req.params.id)
     .then(project => {
       if(!project){

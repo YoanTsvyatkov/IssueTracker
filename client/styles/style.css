@@ -199,3 +199,78 @@ li {
 }
 
 /*--------------------------------------issues------------------------------------*/
+/*-------- Projects -----*/
+#project-header{
+  text-align: center;
+  color: black;
+  font-size: 36px;
+}
+
+#header{
+  width: 100%;
+}
+
+#project-image{
+  display: block;
+}
+
+#project-form{
+   display: inline-block;
+}
+
+#project-form-header{
+  font-size: 30px;
+}
+
+#form{
+   margin-top: 3rem;
+}
+
+#project-name{
+  display:block;
+  margin-top: 8px;
+}
+
+#label-name{
+  display:block;
+}
+
+#project-image{
+  margin-top: 8px;
+}
+
+#add-project-btn{
+  margin-top: 8px;
+}
+
+#project-list-container{
+  margin-top: 3.6rem;
+  display: grid;
+  column-gap: 10px;
+  row-gap: 10px;
+  grid-template-columns: 50% 50%;
+}
+
+#project-list-container img{
+  width: 70%;
+  height: 100%:
+}
+
+#project-list-name{
+  height: 28px;
+}
+
+#box{
+  display: flex;
+  margin-top: 10px;
+}
+
+#btn-delete{
+  margin-left: 10px;
+  width: 80px;
+}
+
+
+#btn-edit{
+  width: 80px;
+}
