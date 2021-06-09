@@ -274,3 +274,8 @@ li {
 #btn-edit{
   width: 80px;
 }
+
+#btn-issue{
+  margin-left: 10px;
+  width: 80px;
+}
