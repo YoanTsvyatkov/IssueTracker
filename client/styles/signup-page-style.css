@@ -16,7 +16,7 @@ form {border: 17px ;
   margin-left: -70px;
 }
 
-input[type=email], input[type=text], input[type=password] {
+#email,#fname, #password {
   width: 100%;
   padding: 12px 20px;
   margin: 8px 0;
