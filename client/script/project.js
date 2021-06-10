@@ -1,11 +1,52 @@
+
+var myNodelist = document.getElementsByTagName("LI");
+var i;
+for (i = 0; i < myNodelist.length; i++) {
+  var span = document.createElement("SPAN");
+  var txt = document.createTextNode("\u00D7");
+  span.className = "close";
+  span.appendChild(txt);
+  myNodelist[i].appendChild(span);
+}
+
+var close = document.getElementsByClassName("close");
+var i;
+for (i = 0; i < close.length; i++) {
+  close[i].onclick = function() {
+    var div = this.parentElement;
+    div.style.display = "none";
+  }
+}
+
+function newElement() {
+  var li = document.createElement("li");
+  var inputValue = document.getElementById("status-input").value;
+  var t = document.createTextNode(inputValue);
+  li.appendChild(t);
+  if (inputValue === '') {
+    alert("You must write something!");
+  } else {
+    document.getElementById("myUL").appendChild(li);
+  }
+  document.getElementById("status-input").value = "";
+
+  var span = document.createElement("SPAN");
+  var txt = document.createTextNode("\u00D7");
+  span.className = "close";
+  span.appendChild(txt);
+  li.appendChild(span);
+
+  for (i = 0; i < close.length; i++) {
+    close[i].onclick = function() {
+      var div = this.parentElement;
+      div.style.display = "none";
+    }
+  }
+}
+
+
 const projectForm = document.getElementById('project-form');
 const projectList = document.getElementById('project-list-container');
-
-const projectEditForm = document.getElementById('edit-project');
-console.log(projectEditForm);
-
-
-
 
 projectForm.addEventListener('submit', async (event) => {
     event.preventDefault();
@@ -26,7 +67,6 @@ projectForm.addEventListener('submit', async (event) => {
         console.error(error);
     }
 });
-
 
 async function displayProjects(){
     try{
@@ -68,28 +108,17 @@ function addProject(project){
     deleteButton.innerHTML = "Delete";
     deleteButton.className = "btn btn-danger";
 
-    const issueButton = document.createElement("button");
-    issueButton.id = "btn-issue";
-    issueButton.innerHTML = "Issue";
-
-    
-
     const box = document.createElement("div");
     box.id = "box"
     box.appendChild(editButton);
     box.appendChild(deleteButton);
-    box.appendChild(issueButton);
 
     newDiv.appendChild(projectName);
     newDiv.appendChild(projectImage);
     newDiv.appendChild(box);
     projectList.appendChild(newDiv);
     addDeleteProjectListener(newDiv, project.id, deleteButton);
-    addEditProjectListener(newDiv, project.id, editButton);
-    
-
 }
-
 
 function addDeleteProjectListener(listElement, projectId, deleteButton){
     deleteButton.addEventListener('click',  async (event) => {
@@ -105,38 +134,5 @@ function addDeleteProjectListener(listElement, projectId, deleteButton){
         projectList.removeChild(listElement);
     })
 }
-
-
-
-function addEditProjectListener(listElement, projectId, editButton){
-    
-
-projectEditForm.addEventListener('submit', async (event) => {
-    event.preventDefault();
-    
-    
-    const data = new FormData(projectForm);
-
-    try{
-        const result = await fetch(`http://localhost:3000/api/project/${projectId}`, {
-            method: "PUT",
-            body: data
-        })
-        const json = await result.json();
-       
-
-    }catch(error){
-        alert("Invalid project data");
-        console.error(error);
-       
-    }
-$('#editModal').modal("toggal");
-   // $('#modal fade').modal("close");
-
-
-});
-
-}
-
 
 displayProjects();

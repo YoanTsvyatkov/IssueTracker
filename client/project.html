@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -18,6 +19,15 @@
                 <form id="project-form" method="POST"  enctype="multipart/form-data">
                     <label for="projectName" id="label-name"><b>Project name</b></label>
                     <input type="text" placeholder="Project name" name="projectName" id="project-name">
+
+                    <div id="status" class="liStatus">
+                        <input type="text" class="statusInput" id="status-input" placeholder="Add status...">
+                        <span onclick="newElement()" class="addStatus">Add statuses</span>
+                      </div>
+                      
+                      <ul id="myUL">
+                      </ul>
+                      
                     <input type="file" id="project-image" name="image" >
                     <button type="submit" class="btn btn-secondary btn-lg" id="add-project-btn">Add</button>
                 </form>
@@ -48,25 +58,17 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="editModalLabel">Edit project</h5>
-
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form id="edit-project" method="PUT"  enctype="multipart/form-data">
-
                     <div class="modal-body">
-                            <label for="projectName" id="label-name"><b>Project name</b></label>
-                        <input type="text" placeholder="Project name" name="projectName" id="project-name">
-                        <input type="file" id="project-image" name="image" >
 
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-secondary btn-lg" id="submit-project-btn">Save changes</button>
-
+                        <button type="button" class="btn btn-primary">Save changes</button>
                     </div>
-                </form>
                 </div>
             </div>
             </div>
