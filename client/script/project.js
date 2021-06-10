@@ -1,11 +1,8 @@
 const projectForm = document.getElementById('project-form');
 const projectList = document.getElementById('project-list-container');
-
-const projectEditForm = document.getElementById('edit-project');
-console.log(projectEditForm);
-
-
-
+const projectEditForm = document.getElementById('edit-form');
+//Variable that will be used when editing project
+let selectedProjectId;
 
 projectForm.addEventListener('submit', async (event) => {
     event.preventDefault();
@@ -18,7 +15,6 @@ projectForm.addEventListener('submit', async (event) => {
             body: data
         })
         const newProject= await result.json();
-        console.log(newProject);
         addProject(newProject);
 
     }catch(error){
@@ -72,8 +68,6 @@ function addProject(project){
     issueButton.id = "btn-issue";
     issueButton.innerHTML = "Issue";
 
-    
-
     const box = document.createElement("div");
     box.id = "box"
     box.appendChild(editButton);
@@ -85,10 +79,14 @@ function addProject(project){
     newDiv.appendChild(box);
     projectList.appendChild(newDiv);
     addDeleteProjectListener(newDiv, project.id, deleteButton);
-    addEditProjectListener(newDiv, project.id, editButton);
-    
-
+    addEditProjectListener(editButton, project.id);
 }
+
+function addEditProjectListener(editButton, projectId){
+    editButton.addEventListener('click', (event) => {
+        selectedProjectId = projectId
+    })
+} 
 
 
 function addDeleteProjectListener(listElement, projectId, deleteButton){
@@ -98,45 +96,37 @@ function addDeleteProjectListener(listElement, projectId, deleteButton){
             {
                 method: "DELETE"
             });
+            
+            projectList.removeChild(listElement);
         }catch(err){
             alert("Something went wrong");
         }
         
-        projectList.removeChild(listElement);
     })
 }
 
-
-
-function addEditProjectListener(listElement, projectId, editButton){
-    
-
 projectEditForm.addEventListener('submit', async (event) => {
     event.preventDefault();
-    
-    
-    const data = new FormData(projectForm);
+
+    const data = new FormData(projectEditForm);
 
     try{
-        const result = await fetch(`http://localhost:3000/api/project/${projectId}`, {
+        const result = await fetch(`http://localhost:3000/api/project/${selectedProjectId}`, {
             method: "PUT",
             body: data
         })
-        const json = await result.json();
-       
 
+        if (result.status == 200){
+            $('#editModal').modal('toggle');
+        }else{
+            //TODO show form data error
+            alert('Something went wrong');
+        }
     }catch(error){
-        alert("Invalid project data");
-        console.error(error);
-       
+        //TODO show form data error
+        alert('Something went wrong');
     }
-$('#editModal').modal("toggal");
-   // $('#modal fade').modal("close");
-
-
-});
-
-}
+})
 
 
 displayProjects();

@@ -56,6 +56,10 @@ projectController.post("/project", upload.single("image"), (req, res) => {
 });
 
 projectController.put("/project/:id",  upload.single("image"), (req, res) => {
+    if(!req.body.projectName && !req.body.statuses && !req.file){
+      return res.sendStatus(400);
+    }
+    
     let fileName;
     if(req.file){
       fileName = req.file.filename;
@@ -111,7 +115,7 @@ projectController.put("/project/:id",  upload.single("image"), (req, res) => {
                   "statuses": project.status
                 }
 
-                return res.status(201).send(result);
+                return res.status(200).send(result);
               })
               .catch(err => {
                return res.status(500).send(err);
