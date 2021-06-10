@@ -18,7 +18,7 @@ margin-top: -80px;
 margin-left: -70px;
 }
 
-input[type=text], input[type=password] {
+#email,#password {
 width: 100%;
 padding: 12px 20px;
 margin: 8px 0;
