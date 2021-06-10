@@ -1,11 +1,4 @@
-
-
-<<<<<<< HEAD
-=======
-
->>>>>>> cad4a49418f3afd2cf4dcfe7a4dfd2d000726884
-const myNodelist = document.getElementsByTagName("LI");
-let i;
+et i;
 for (i = 0; i < myNodelist.length; i++) {
   let span = document.createElement("SPAN");
   let txt = document.createTextNode("\u00D7");
@@ -15,10 +8,6 @@ for (i = 0; i < myNodelist.length; i++) {
 }
 
 const close = document.getElementsByClassName("close");
-<<<<<<< HEAD
-=======
-let i;
->>>>>>> cad4a49418f3afd2cf4dcfe7a4dfd2d000726884
 for (i = 0; i < close.length; i++) {
   close[i].onclick = function() {
     let div = this.parentElement;
@@ -51,6 +40,7 @@ function newElement() {
     }
   }
 }
+
 
 
 
