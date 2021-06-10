@@ -1,4 +1,5 @@
-et i;
+const myNodelist = document.getElementsByTagName("LI");
+let i;
 for (i = 0; i < myNodelist.length; i++) {
   let span = document.createElement("SPAN");
   let txt = document.createTextNode("\u00D7");
