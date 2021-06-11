@@ -1,14 +1,23 @@
 const projectForm = document.getElementById('project-form');
 const projectList = document.getElementById('project-list-container');
+const token = localStorage.getItem('token');
 const projectEditForm = document.getElementById('edit-form');
 const modalProjectName = document.getElementById('edit-project-name');
 const projectName = document.getElementById('project-name');
 const projectImage = document.getElementById('project-image');
 
+if(token == null){
+    window.location.href = "index.html";
+}
+
 //Variable that will be used when editing project
 let selectedProjectId;
 let selectedProjectDiv;
 
+document.getElementById('logout-list-item').addEventListener('click', (event) => {
+    localStorage.removeItem('token');
+    window.location.href = "index.html";
+})
 
 projectForm.addEventListener('submit', async (event) => {
     event.preventDefault();
@@ -18,8 +27,15 @@ projectForm.addEventListener('submit', async (event) => {
     try{
         const result = await fetch("http://localhost:3000/api/project", {
             method: "POST",
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
             body: data
         })
+
+        errorCheck(result);
+
+
         const newProject= await result.json();
         addProject(newProject);
         projectName.value = "";
@@ -29,22 +45,33 @@ projectForm.addEventListener('submit', async (event) => {
     }
 });
 
-
 async function displayProjects(){
     try{
         const result = await fetch("http://localhost:3000/api/project", {
-                method: "GET"
+                method: "GET",
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
             })
+
+        errorCheck(result);
+
         const projectList = await result.json();
 
         projectList.forEach(element => {
             addProject(element);
         });
     }catch(err){
-        alert("Something went wrong");
+        console.log(err);
+        alert('Something went wrong');
     }
 }
 
+function errorCheck(result){
+    if(result.status == 401 || result.status == 403){
+        localStorage.removeItem('token');
+    }
+}
 
 function addProject(project){
     const newDiv = document.createElement("div");
@@ -88,6 +115,14 @@ function addProject(project){
     projectList.appendChild(newDiv);
     addDeleteProjectListener(newDiv, project.id, deleteButton);
     addEditProjectListener(editButton, newDiv, project.id);
+    addOpenIssueListener(issueButton, project.id);
+}
+
+function addOpenIssueListener(issueButton, projectId){
+    issueButton.addEventListener('click', (event) => {
+        sessionStorage.setItem('projectId', projectId);
+        window.location.href = `./main-board.html`;
+    });
 }
 
 function addEditProjectListener(editButton, projectDiv, projectId){
@@ -102,18 +137,24 @@ function addEditProjectListener(editButton, projectDiv, projectId){
 function addDeleteProjectListener(listElement, projectId, deleteButton){
     deleteButton.addEventListener('click',  async (event) => {
         try{
-            await fetch(`http://localhost:3000/api/project/${projectId}`,
+           const result = await fetch(`http://localhost:3000/api/project/${projectId}`,
             {
-                method: "DELETE"
+                method: "DELETE",
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
             });
             
+            errorCheck(result);
             projectList.removeChild(listElement);
         }catch(err){
-            alert("Something went wrong");
+            alert('Something went wrong');
         }
         
     })
 }
+
+displayProjects();
 
 projectEditForm.addEventListener('submit', async (event) => {
     event.preventDefault();
@@ -123,8 +164,13 @@ projectEditForm.addEventListener('submit', async (event) => {
     try{
         const result = await fetch(`http://localhost:3000/api/project/${selectedProjectId}`, {
             method: "PUT",
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
             body: data
         })
+
+        errorCheck(result);
 
         if (result.status == 200){
             const json = await result.json();

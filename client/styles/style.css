@@ -1,3 +1,4 @@
+
 * {
   line-height: 1.6rem;
   font-family: Arial, Helvetica, sans-serif;
@@ -29,6 +30,9 @@ header h1 {
 
 .container {
   width: 85%;
+  margin-left: auto;
+  margin-top: auto;
+  margin-right: auto;
   margin-bottom: 30px;
 }
 
@@ -249,6 +253,11 @@ li {
   column-gap: 10px;
   row-gap: 10px;
   grid-template-columns: 50% 50%;
+}
+
+#project-list-container img{
+  width: 70%;
+  height: 100%;
   margin-bottom: 30dp;
 }
 

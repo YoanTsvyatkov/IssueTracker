@@ -10,7 +10,7 @@ const {Router} = express;
 
 const projectController = Router();
 
-projectController.post("/project", upload.single("image"), (req, res) => {
+projectController.post("/project", verifyToken, upload.single("image"), (req, res) => {
   const name = req.body.projectName;
   let fileName;
 
@@ -47,7 +47,7 @@ projectController.post("/project", upload.single("image"), (req, res) => {
     })
 });
 
-projectController.put("/project/:id",  upload.single("image"), (req, res) => {
+projectController.put("/project/:id", verifyToken,  upload.single("image"), (req, res) => {
     if(!req.body.projectName && !req.body.statuses && !req.file){
       return res.sendStatus(400);
     }
@@ -112,7 +112,7 @@ projectController.put("/project/:id",  upload.single("image"), (req, res) => {
 });
 
 
-projectController.get("/project", async (req, res) => {
+projectController.get("/project", verifyToken, async (req, res) => {
   try{
     const list = await Project.find({})
     const result = list.map(project => {
@@ -135,7 +135,7 @@ projectController.get("/project", async (req, res) => {
   }
 });
 
-projectController.delete('/project/:id', (req, res) => {
+projectController.delete('/project/:id', verifyToken, (req, res) => {
   Project.findByIdAndDelete(req.params.id)
     .then(project => {
       if(!project){
