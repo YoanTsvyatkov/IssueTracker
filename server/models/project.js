@@ -11,8 +11,7 @@ const projectSchema = new Schema({
     image: {
         data: Buffer,
         contentType: String
-    },
-
+    }
 });
 
 const Project = model('Project', projectSchema);

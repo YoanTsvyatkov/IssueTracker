@@ -1,5 +1,14 @@
 const projectForm = document.getElementById('project-form');
 const projectList = document.getElementById('project-list-container');
+const projectEditForm = document.getElementById('edit-form');
+const modalProjectName = document.getElementById('edit-project-name');
+const projectName = document.getElementById('project-name');
+const projectImage = document.getElementById('project-image');
+
+//Variable that will be used when editing project
+let selectedProjectId;
+let selectedProjectDiv;
+
 
 projectForm.addEventListener('submit', async (event) => {
     event.preventDefault();
@@ -12,14 +21,14 @@ projectForm.addEventListener('submit', async (event) => {
             body: data
         })
         const newProject= await result.json();
-        console.log(newProject);
         addProject(newProject);
-
+        projectName.value = "";
+        projectImage.value = "";
     }catch(error){
         alert("Invalid project data");
-        console.error(error);
     }
 });
+
 
 async function displayProjects(){
     try{
@@ -61,17 +70,34 @@ function addProject(project){
     deleteButton.innerHTML = "Delete";
     deleteButton.className = "btn btn-danger";
 
+    const issueButton = document.createElement("button");
+    issueButton.id = "btn-issue";
+    issueButton.innerHTML = "Issues";
+    issueButton.className = "btn btn-light";
+
+
     const box = document.createElement("div");
     box.id = "box"
     box.appendChild(editButton);
     box.appendChild(deleteButton);
+    box.appendChild(issueButton);
 
     newDiv.appendChild(projectName);
     newDiv.appendChild(projectImage);
     newDiv.appendChild(box);
     projectList.appendChild(newDiv);
     addDeleteProjectListener(newDiv, project.id, deleteButton);
+    addEditProjectListener(editButton, newDiv, project.id);
 }
+
+function addEditProjectListener(editButton, projectDiv, projectId){
+    editButton.addEventListener('click', (event) => {
+        selectedProjectId = projectId
+        modalProjectName.value = `${projectDiv.children[0].innerHTML}`;
+        selectedProjectDiv = projectDiv
+    })
+} 
+
 
 function addDeleteProjectListener(listElement, projectId, deleteButton){
     deleteButton.addEventListener('click',  async (event) => {
@@ -80,12 +106,43 @@ function addDeleteProjectListener(listElement, projectId, deleteButton){
             {
                 method: "DELETE"
             });
+            
+            projectList.removeChild(listElement);
         }catch(err){
             alert("Something went wrong");
         }
         
-        projectList.removeChild(listElement);
     })
 }
+
+projectEditForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    const data = new FormData(projectEditForm);
+
+    try{
+        const result = await fetch(`http://localhost:3000/api/project/${selectedProjectId}`, {
+            method: "PUT",
+            body: data
+        })
+
+        if (result.status == 200){
+            const json = await result.json();
+            selectedProjectDiv.children[0].innerHTML = json.projectName;
+            if(json.image){
+                selectedProjectDiv.children[1].setAttribute('src', `data:image/${json.image.contentType};base64,${json.image.img}`);
+            }
+            $('#editModal').modal('toggle');
+        }else{
+            //TODO show form data error
+            alert('Something went wrong');
+        }
+    }catch(error){
+        //TODO show form data error
+        console.log(error);
+        alert('Something went wrong');
+    }
+})
+
 
 displayProjects();

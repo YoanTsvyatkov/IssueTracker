@@ -2,6 +2,7 @@ import express from "express";
 import verifyToken from "../middlewares/verify-token.js";
 import Project from "../models/project.js";
 import upload from "../utils/multer.js";
+import ProjectDto from "../dtos/project-dto.js"
 import fs from "fs";
 import path from "path";
 
@@ -37,17 +38,8 @@ projectController.post("/project", upload.single("image"), (req, res) => {
 
       project.save()
         .then(() => {
-          const thumb = data.toString('base64');
-          const result = {
-            "id": project.id,
-            "projectName": project.projectName,
-            "image": {
-              "contentType": req.file.mimetype,
-              "img": thumb
-            },
-            "statuses": project.status
-          }
-          return res.status(201).send(result);
+          const projectDto = new ProjectDto(project, project.image.contentType);
+          return res.status(201).send(JSON.stringify(projectDto));
         })
         .catch(err => {
          return res.status(500).send(err);
@@ -56,12 +48,16 @@ projectController.post("/project", upload.single("image"), (req, res) => {
 });
 
 projectController.put("/project/:id",  upload.single("image"), (req, res) => {
+    if(!req.body.projectName && !req.body.statuses && !req.file){
+      return res.sendStatus(400);
+    }
+    
     let fileName;
     if(req.file){
       fileName = req.file.filename;
     }
 
-    const projectName = req.body.projectName;
+    const projectName = req.body.projectName || null;
     const statuses = req.body.statuses || null;
 
     Project.findById(
@@ -74,7 +70,7 @@ projectController.put("/project/:id",  upload.single("image"), (req, res) => {
         }
 
         if(projectName){
-          project.projectName = req.body.projectName;
+          project.projectName = projectName;
         }
 
         if(statuses){
@@ -84,7 +80,8 @@ projectController.put("/project/:id",  upload.single("image"), (req, res) => {
         if(!fileName){
           project.save()
             .then(() => {
-              return res.status(200).send(project);
+              const projectDto = new ProjectDto(project, project.image.contentType);
+              return res.status(200).send(JSON.stringify(projectDto));
             })
             .catch(err => {
              return res.sendStatus(500);
@@ -100,18 +97,8 @@ projectController.put("/project/:id",  upload.single("image"), (req, res) => {
       
             project.save()
               .then(() => {
-                const thumb =  data.toString('base64');
-                const result = {
-                  "id": project.id,
-                  "projectName": project.projectName,
-                  "image": {
-                    "contentType": req.file.mimetype,
-                    "img": thumb
-                  },
-                  "statuses": project.status
-                }
-
-                return res.status(201).send(result);
+                const projectDto = new ProjectDto(project, req.file.mimetype)
+                return res.status(200).send(JSON.stringify(projectDto));
               })
               .catch(err => {
                return res.status(500).send(err);
