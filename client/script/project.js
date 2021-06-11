@@ -19,8 +19,15 @@ projectForm.addEventListener('submit', async (event) => {
     try{
         const result = await fetch("http://localhost:3000/api/project", {
             method: "POST",
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
             body: data
         })
+
+        errorIntercept(result);
+
+
         const newProject= await result.json();
         console.log(newProject);
         addProject(newProject);
@@ -34,18 +41,30 @@ projectForm.addEventListener('submit', async (event) => {
 async function displayProjects(){
     try{
         const result = await fetch("http://localhost:3000/api/project", {
-                method: "GET"
+                method: "GET",
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
             })
+
+        errorIntercept(result);
+
         const projectList = await result.json();
 
         projectList.forEach(element => {
             addProject(element);
         });
     }catch(err){
-
+        alert('Something went wrong');
     }
 }
 
+function errorIntercept(result){
+    if(result.status == 401 || result.status == 403){
+        localStorage.removeItem('token');
+        window.location.href = "index.html";
+    }
+}
 
 function addProject(project){
     const newDiv = document.createElement("div");
@@ -86,12 +105,17 @@ function addProject(project){
 function addDeleteProjectListener(listElement, projectId, deleteButton){
     deleteButton.addEventListener('click',  async (event) => {
         try{
-            await fetch(`http://localhost:3000/api/project/${projectId}`,
+           const result = await fetch(`http://localhost:3000/api/project/${projectId}`,
             {
-                method: "DELETE"
+                method: "DELETE",
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
             });
+            
+            errorIntercept(result);
         }catch(err){
-
+            alert('Something went wrong');
         }
         
         projectList.removeChild(listElement);
