@@ -1,6 +1,15 @@
-
 const projectForm = document.getElementById('project-form');
 const projectList = document.getElementById('project-list-container');
+const token = localStorage.getItem('token');
+
+if(token == null){
+    window.location.href = "index.html";
+}
+
+document.getElementById('logout-list-item').addEventListener('click', (event) => {
+    localStorage.removeItem('token');
+    window.location.href = "index.html";
+})
 
 projectForm.addEventListener('submit', async (event) => {
     event.preventDefault();
@@ -33,7 +42,7 @@ async function displayProjects(){
             addProject(element);
         });
     }catch(err){
-        alert("Something went wrong");
+
     }
 }
 
@@ -82,7 +91,7 @@ function addDeleteProjectListener(listElement, projectId, deleteButton){
                 method: "DELETE"
             });
         }catch(err){
-            alert("Something went wrong");
+
         }
         
         projectList.removeChild(listElement);
