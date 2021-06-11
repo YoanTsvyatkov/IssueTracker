@@ -29,14 +29,16 @@ header h1 {
 }
 
 .container {
-  margin: auto;
   width: 85%;
+  margin-left: auto;
+  margin-top: auto;
+  margin-right: auto;
+  margin-bottom: 30px;
 }
 
 body {
   background: linear-gradient(to top, #f3e7e9 0%, #e3eeff 99%, #e3eeff 100%);
   height: 100%;
-  margin: 0;
   background-repeat: no-repeat;
   background-attachment: fixed;
 }
@@ -225,6 +227,7 @@ li {
 
 #form{
    margin-top: 3rem;
+   margin-left: 8px;
 }
 
 #project-name{
@@ -255,6 +258,7 @@ li {
 #project-list-container img{
   width: 70%;
   height: 100%;
+  margin-bottom: 30dp;
 }
 
 #project-list-name{
@@ -263,20 +267,47 @@ li {
 
 #box{
   display: flex;
+  flex-wrap: wrap;
   margin-top: 10px;
 }
 
 #btn-delete{
-  margin-left: 10px;
+  margin-left: 8px;
+  margin-top: 8px;
   width: 80px;
+  box-sizing: border-box;
 }
 
 
 #btn-edit{
+  margin-left: 8px;
+  margin-top: 8px;
   width: 80px;
+  box-sizing: border-box;
 }
 
 #btn-issue{
-  margin-left: 10px;
+  margin-left: 8px;
+  margin-top: 8px;
   width: 80px;
+  box-sizing: border-box;
+}
+
+#btn-issue{
+  width: 80px;
+}
+
+#edit-project-image{
+  margin-top: 8px;
+}
+
+#project-list-item img{
+  height: 250px;
+  margin-left: 8px;
+  width: 70%;
+}
+
+
+#project-list-item h3{
+  margin-left: 8px;
 }
