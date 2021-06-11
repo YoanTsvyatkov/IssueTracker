@@ -2,6 +2,9 @@ const projectForm = document.getElementById('project-form');
 const projectList = document.getElementById('project-list-container');
 const projectEditForm = document.getElementById('edit-form');
 const modalProjectName = document.getElementById('edit-project-name');
+const projectName = document.getElementById('project-name');
+const projectImage = document.getElementById('project-image');
+
 //Variable that will be used when editing project
 let selectedProjectId;
 let selectedProjectDiv;
@@ -19,7 +22,8 @@ projectForm.addEventListener('submit', async (event) => {
         })
         const newProject= await result.json();
         addProject(newProject);
-
+        projectName.value = "";
+        projectImage.value = "";
     }catch(error){
         alert("Invalid project data");
     }
@@ -68,7 +72,9 @@ function addProject(project){
 
     const issueButton = document.createElement("button");
     issueButton.id = "btn-issue";
-    issueButton.innerHTML = "Issue";
+    issueButton.innerHTML = "Issues";
+    issueButton.className = "btn btn-light";
+
 
     const box = document.createElement("div");
     box.id = "box"
