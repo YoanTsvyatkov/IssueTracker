@@ -2,19 +2,22 @@ import express from "express";
 import verifyToken from "../middlewares/verify-token.js";
 import Issue from "../models/issue.js";
 
-const {Router} = express;
+const { Router } = express;
 
 const issueController = Router();
 
 issueController.post("/issue", verifyToken, (req, res) => {
   if (
     !req.body.title ||
-    !req.body.priority
+    !req.body.priority ||
+    !req.body.status ||
+    !req.body.projectId
   ) {
     return res.sendStatus(400);
   }
 
   const issueDocument = {
+    status: req.body.status,
     title: req.body.title,
     description: req.body.description || "",
     priority: req.body.priority,

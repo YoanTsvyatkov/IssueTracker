@@ -7,12 +7,15 @@ const issueSchema = new Schema({
         type: String,
         required: true
     },
-    description: String,
     priority: {
         type: String,
         required: true
     },
     projectId: {
+        type: String,
+        required: true
+    },
+    status : {
         type: String,
         required: true
     },

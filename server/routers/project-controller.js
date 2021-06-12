@@ -116,19 +116,9 @@ projectController.get("/project", verifyToken, async (req, res) => {
   try{
     const list = await Project.find({})
     const result = list.map(project => {
-              const thumb = project.image.data.toString('base64');
-              const newProject = {
-                "id": project.id,
-                "projectName": project.projectName,
-                "image": {
-                  "img": thumb,
-                  "contentType": project.image.contentType
-                },
-                "statuses": project.status
-              }
-              return newProject;
-        });
-
+              return new ProjectDto(project, project.image.contentType);
+    });
+    
     res.send(result);
   }catch(err){
     res.status(500).send(err);
