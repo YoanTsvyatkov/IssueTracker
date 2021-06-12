@@ -1,4 +1,3 @@
-
 * {
   line-height: 1.6rem;
   font-family: Arial, Helvetica, sans-serif;
@@ -163,7 +162,7 @@ li {
 }
 
 .list-items li {
-  font-size: 1.4rem;
+  font-size: 0.9rem;
   font-weight: 400;
   line-height: 1.3;
   background-color: #fff;
@@ -171,6 +170,7 @@ li {
   color: #4d4d4d;
   border-bottom: 0.1rem solid #ccc;
   border-radius: 0.3rem;
+  margin-top: 0.3rem;
   margin-bottom: 0.6rem;
   margin-left: 0.5rem;
   word-wrap: break-word;
@@ -185,69 +185,176 @@ li {
   background-color: #eee;
 }
 
+.display-li {
+  display: flex;
+}
+
+.display-task {
+  flex-basis: 0;
+  flex-grow: 2;
+}
+
+.display-buttons {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 0;
+  flex-grow: 1;
+}
+
+.delete {
+  color: #fff;
+  font-weight: 300;
+  font-family: Arial, sans-serif;
+}
+
 #list-button-container {
+  padding: 16px;
+  margin: 8px 0;
+  display: flex;
+  flex-direction: column;
   background-color: whitesmoke;
   border-bottom-left-radius: 0.8rem;
   border-bottom-right-radius: 0.8rem;
 }
 
-.add-button {
+.new-task {
+  padding: 4px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+  box-shadow: 0 4px 2px -2px gray;
+}
+#priority,
+#assignee {
+  padding: 4px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+  box-shadow: 0 4px 2px -2px gray;
+}
+
+.add-issue-button {
   background: #2e2eff;
   font-weight: bold;
   color: white;
-  width: 282px;
+  width: 272px;
   border: none;
   border-radius: 0.3rem;
-  margin: 1rem 0.4rem;
+  padding: 5px 20px;
+  margin: 15px 0;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.add-task-button:hover {
+  background: green;
+}
+
+.delete-task {
+  font-size: large;
+  cursor: pointer;
+}
+
+.low {
+  color: blue;
+  font-weight: bold;
+}
+
+.normal {
+  color: green;
+  font-weight: bold;
+}
+
+.important {
+  color: orangered;
+  font-weight: bold;
+}
+
+.critical {
+  color: red;
+  font-weight: bold;
+}
+
+.issue-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.issue-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.issue-header .close-issue {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background: none;
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.issue-header .edit-issue {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background: none;
+  font-size: 1.25rem;
+  font-weight: bold;
 }
 
 /*--------------------------------------issues------------------------------------*/
 /*-------- Projects -----*/
-#project-header{
+#project-header {
   text-align: center;
   color: black;
   font-size: 36px;
 }
 
-#header{
+#header {
   width: 100%;
 }
 
-#project-image{
+#project-image {
   display: block;
 }
 
-#project-form{
-   display: inline-block;
+#project-form {
+  display: inline-block;
 }
 
-#project-form-header{
+#project-form-header {
   font-size: 30px;
 }
 
-#form{
-   margin-top: 3rem;
-   margin-left: 8px;
+#form {
+  margin-top: 3rem;
+  margin-left: 8px;
 }
 
-#project-name{
-  display:block;
+#project-name {
+  display: block;
   margin-top: 8px;
 }
 
-#label-name{
-  display:block;
+#label-name {
+  display: block;
 }
 
-#project-image{
+#project-image {
   margin-top: 8px;
 }
 
-#add-project-btn{
+#add-project-btn {
   margin-top: 8px;
 }
 
-#project-list-container{
+#project-list-container {
   margin-top: 3.6rem;
   display: grid;
   column-gap: 10px;
@@ -255,59 +362,57 @@ li {
   grid-template-columns: 50% 50%;
 }
 
-#project-list-container img{
+#project-list-container img {
   width: 70%;
   height: 100%;
   margin-bottom: 30dp;
 }
 
-#project-list-name{
+#project-list-name {
   height: 28px;
 }
 
-#box{
+#box {
   display: flex;
   flex-wrap: wrap;
   margin-top: 10px;
 }
 
-#btn-delete{
+#btn-delete {
   margin-left: 8px;
   margin-top: 8px;
   width: 80px;
   box-sizing: border-box;
 }
 
-
-#btn-edit{
+#btn-edit {
   margin-left: 8px;
   margin-top: 8px;
   width: 80px;
   box-sizing: border-box;
 }
 
-#btn-issue{
+#btn-issue {
   margin-left: 8px;
   margin-top: 8px;
   width: 80px;
   box-sizing: border-box;
 }
 
-#btn-issue{
+#btn-issue {
   width: 80px;
 }
 
-#edit-project-image{
+#edit-project-image {
   margin-top: 8px;
 }
 
-#project-list-item img{
+#project-list-item img {
   height: 250px;
   margin-left: 8px;
   width: 70%;
 }
 
-
-#project-list-item h3{
+#project-list-item h3 {
   margin-left: 8px;
 }
