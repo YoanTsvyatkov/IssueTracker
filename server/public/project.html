@@ -1,0 +1,67 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="./styles/style.css">
+    </head>
+    <body>
+        <header>
+            <h1>Projects</h1>
+            <nav id="main-nav">
+                <ul>
+                    <li id="logout-list-item"><a href="./index.html">Logout</a></li>
+                </ul>
+            </nav>
+        </header>
+        
+        <div class="container">
+            
+            <div id="form">
+                <h2 id="project-form-header">Add project</h1>
+                <form id="project-form" method="POST"  enctype="multipart/form-data">
+                    <label for="projectName" id="label-name" class="col-form-label">Project name</label>
+                    <input type="text" placeholder="Project name" name="projectName" id="project-name" class="form-control">
+                    <input type="file" id="project-image" name="image" >
+                    <button type="submit" class="btn btn-secondary btn-lg" id="add-project-btn">Add</button>
+                </form>
+            </div>
+    
+            <div id="project-list-container">
+            </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <h5 class="modal-title" id="editModalLabel">Edit project</h5>
+
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                          </button>
+                      </div>
+
+                      <form id="edit-form" method="POST"  enctype="multipart/form-data">
+                          <div class="modal-body">
+                              <label for="projectName" id="label-name" class="col-form-label">Project name</label>
+                              <input type="text" placeholder="Project name" name="projectName" id="edit-project-name" class="form-control">
+                              <input type="file" id="edit-project-image" name="image" >
+                          </div>
+                          <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                              <button type="submit" class="btn btn-primary" id="edit-project-btn">Save changes</button>
+                          </div>
+                      </form>
+                  </div>
+              </div>
+            </div>
+        </div>
+
+        <script src="./script/project.js"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    </body>
+</html>

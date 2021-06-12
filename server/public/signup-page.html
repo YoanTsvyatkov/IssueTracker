@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="./styles/signup-page-style.css">
+    <title>Register</title>
+    <script src="./script/index.js" defer></script>
+</head>
+<body>
+    <div class="logo">
+        <h2>Issue Tracker</h2>
+      </div>
+     <div class="screen">
+         <form id="register-form" method="POST" action="project.html" >
+             <div class="sign-up-form">
+                <div class="container">
+                    <h2>Sign up</h2> 
+
+                    <label for="email">Email</label>
+                    <input id="email" name="email" placeholder="Enter email adress" 
+                           type="email" required>
+                
+                   <label for="fname">Full name</label>
+                    <input id="fname" name="fname" placeholder="Enter full name" type="text" required>
+                
+                <label for="password">Password</label>
+                    <input id="password" name="password" placeholder="Enter password" type="password" required>
+                    
+                <button id="submit-btn" class="signup-btn" type="submit">Sign up</button>
+                <div class="login-container">
+                    <p>Already have an account? <a href="./login.html">
+                    <strong>Log in</strong></a></p>
+                </div>
+                <div id="error">
+                    <p id="error-message"></p>
+                </div>
+             </div>
+         </form>
+     </div>
+</body>
+</html>
