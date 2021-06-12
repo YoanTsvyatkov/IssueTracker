@@ -74,6 +74,8 @@ function errorCheck(result){
 }
 
 function addProject(project){
+    console.log('here');
+
     const newDiv = document.createElement("div");
     newDiv.id = 'project-list-item';
 
@@ -120,7 +122,7 @@ function addProject(project){
 
 function addOpenIssueListener(issueButton, projectId){
     issueButton.addEventListener('click', (event) => {
-        sessionStorage.setItem('projectId', projectId);
+        localStorage.setItem('projectId', projectId);
         window.location.href = `./main-board.html`;
     });
 }
@@ -153,8 +155,6 @@ function addDeleteProjectListener(listElement, projectId, deleteButton){
         
     })
 }
-
-displayProjects();
 
 projectEditForm.addEventListener('submit', async (event) => {
     event.preventDefault();
