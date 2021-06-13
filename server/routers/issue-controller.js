@@ -32,7 +32,7 @@ issueController.post("/issue", verifyToken, (req, res) => {
       res.status(201).send(issueDocument)
     })
     .catch(err => {
-      res.status(500).send(err);
+      res.sendStatus(500);
     })
 });
 
@@ -54,7 +54,7 @@ issueController.put("/issue/:id", verifyToken, (req, res) => {
       return res.send(issue);
    }
    ).catch(err => {
-      res.status(500).send(err); 
+      res.sendStatus(500); 
    });
 });
 
@@ -66,22 +66,8 @@ issueController.get("/issue/:projectId", verifyToken, (req, res) => {
         res.send(issues);
       })
       .catch(err => {
-        res.status(500).send(err);
+        res.sendStatus(500);
       })
-});
-
-issueController.get("/issue/:id", verifyToken, (req, res) => {
-  Issue.findById(req.params.id)
-    .then(issue => {
-      if(!issue){
-        return res.sendStatus(404);
-      }
-
-      return res.send(issue);
-    })
-    .catch(err => {
-      return res.status(500).send(err);
-    })
 });
 
 issueController.delete("/issue/:id", verifyToken, (req, res) => {
@@ -94,7 +80,7 @@ issueController.delete("/issue/:id", verifyToken, (req, res) => {
 
       return res.send(issue);
     }).catch(err => {
-      return res.status(500).send(err);
+      return res.sendStatus(500);
     });
 });
 

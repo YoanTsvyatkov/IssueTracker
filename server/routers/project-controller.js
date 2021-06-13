@@ -26,7 +26,7 @@ projectController.post("/project", verifyToken, upload.single("image"), (req, re
 
   fs.readFile(path.join(path.resolve(), '/uploads/', fileName), (err, data) =>{
       if(err){
-        return res.status(400).send(err);
+        return res.sendStatus(400);
       }
 
       const project = Project();
@@ -42,7 +42,7 @@ projectController.post("/project", verifyToken, upload.single("image"), (req, re
           return res.status(201).send(JSON.stringify(projectDto));
         })
         .catch(err => {
-         return res.status(500).send(err);
+         return res.sendStatus(500);
         })
     })
 });
@@ -89,7 +89,7 @@ projectController.put("/project/:id", verifyToken,  upload.single("image"), (req
         }else{
           fs.readFile(path.join(path.resolve(), '/uploads/', fileName), (err, data) =>{
             if(err){
-              return res.status(400).send(err);
+              return res.sendStatus(400);
             }
   
             project.image.data = data;
@@ -101,13 +101,13 @@ projectController.put("/project/:id", verifyToken,  upload.single("image"), (req
                 return res.status(200).send(JSON.stringify(projectDto));
               })
               .catch(err => {
-               return res.status(500).send(err);
+               return res.sendStatus(500);
               })
           })
         }
     })
      .catch(err => {
-        return res.status(500).send(err); 
+        return res.sendStatus(500); 
     });
 });
 
@@ -121,7 +121,7 @@ projectController.get("/project", verifyToken, async (req, res) => {
     
     res.send(result);
   }catch(err){
-    res.status(500).send(err);
+    res.sendStatus(500);
   }
 });
 
@@ -129,13 +129,13 @@ projectController.delete('/project/:id', verifyToken, (req, res) => {
   Project.findByIdAndDelete(req.params.id)
     .then(project => {
       if(!project){
-        return  res.statusCode(404);
+        return  res.sendStatus(404);
       }
 
       return res.send(project);
     })
     .catch(err => {
-      res.status(500).send(err);
+      res.sendStatus(500);
     });
 });
 

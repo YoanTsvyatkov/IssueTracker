@@ -1,12 +1,18 @@
 import jwt from 'jsonwebtoken'
 
-function verifyToken(req, res, next){ 
-    if (!req.headers.authorization || req.headers.authorization.split(' ').length <= 1 || 
-        req.headers.authorization.split(' ')[0] != 'Bearer'){
+function verifyToken(req, res, next){
+    if(!req.headers.authorization){
+        return res.sendStatus(401);
+    }
+
+    const bearerToken = req.headers.authorization.split(' ')
+
+    if (bearerToken.length != 2 || 
+        bearerToken[0] != 'Bearer'){
         return res.sendStatus(401)
     }
 
-    let token = req.headers.authorization.split(' ').pop()
+    const token = req.headers.authorization.split(' ').pop()
 
     jwt.verify(token, process.env.SECRET, (error, user) => {
         if(error){

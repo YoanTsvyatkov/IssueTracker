@@ -33,7 +33,7 @@ authController.post("/login", (req, res) => {
                 res.send(err);
               })
     }).catch((err) => {
-      return res.status(500).json(err);
+      return res.sendStatus(500);
     });
 });
 
@@ -65,15 +65,15 @@ authController.post("/register", (req, res) => {
                       return res.send({ token: token });
             })
             .catch(err => {
-              return res.status(500).send(err);
+              return res.sendStatus(500);
             })
           })
           .catch(err => {
-            return res.send(err);
+            return res.sendStatus(500);
           });
     })
     .catch((err) => {
-      res.status(500).send(err);
+      return res.sendStatus(500);
     });
 });
 
