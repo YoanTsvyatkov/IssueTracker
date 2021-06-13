@@ -12,57 +12,20 @@
     />
   </head>
   <body>
-    <div class="header">
-      <h1>IssueTracker</h1>
-    </div>
+    <header>
+      <h1>Issues</h1>
+      <nav id="main-nav">
+        <ul>
+          <li id="logout-list-item"><a href="./index.html">Logout</a></li>
+          <li id="to-projects"><a href="./project.html">Projects</a></li>
+        </ul>
+      </nav>
+    </header>
     <div class="main">
       <section class="lists-container">
         <div class="list">
           <h3 class="list-title">No Status</h3>
-          <ul class="list-items" id="no_status">
-            <li class="draggable" draggable="true">
-              <div class="issue-header">
-                <option class="critical">Critical</option>
-                <div>
-                  <button class="edit-issue"><i class="fa fa-edit"></i></button>
-                  <button class="close-issue">&times;</button>
-                </div>
-              </div>
-              <div>Task 1</div>
-              <div class="issue-footer">
-                <div>Assignee:</div>
-                <option value="Assignee">Assignee</option>
-              </div>
-            </li>
-            <li class="draggable" draggable="true">
-              <div class="issue-header">
-                <option class="low">Low</option>
-                <div>
-                  <button class="edit-issue"><i class="fa fa-edit"></i></button>
-                  <button class="close-issue">&times;</button>
-                </div>
-              </div>
-              <div>Task 2</div>
-              <div class="issue-footer">
-                <div>Assignee:</div>
-                <option value="Assignee">Assignee</option>
-              </div>
-            </li>
-            <li class="draggable" draggable="true">
-              <div class="issue-header">
-                <option class="important">Important</option>
-                <div>
-                  <button class="edit-issue"><i class="fa fa-edit"></i></button>
-                  <button class="close-issue">&times;</button>
-                </div>
-              </div>
-              <div>Task 3</div>
-              <div class="issue-footer">
-                <div>Assignee:</div>
-                <option value="Assignee">Assignee</option>
-              </div>
-            </li>
-          </ul>
+          <ul class="list-items" id="nostatus"></ul>
           <div id="list-button-container">
             <input class="new-task" type="text" placeholder="Add new task..." />
             <select id="priority">
@@ -72,11 +35,7 @@
               <option class="critical" value="Critical">Critical</option>
             </select>
             <select id="assignee">
-              <option value="Assignee">Assignee</option>
-              <option value="Jim">Jim</option>
-              <option value="Diana">Diana</option>
-              <option value="Lee">Lee</option>
-              <option value="John">John</option>
+              <option value="">Unassigned</option>
             </select>
             <button class="add-issue-button">+ Add Issue</button>
           </div>
@@ -84,78 +43,17 @@
 
         <div class="list">
           <h3 class="list-title">To-Do</h3>
-          <ul class="list-items">
-            <li class="draggable" draggable="true">
-              <div class="issue-header">
-                <option class="normal">Normal</option>
-                <div>
-                  <button class="edit-issue"><i class="fa fa-edit"></i></button>
-                  <button class="close-issue">&times;</button>
-                </div>
-              </div>
-              <div>To-Do 1</div>
-              <div class="issue-footer">
-                <div>Assignee:</div>
-                <option value="Assignee">Assignee</option>
-              </div>
-            </li>
-          </ul>
+          <ul class="list-items" id="todo"></ul>
         </div>
 
         <div class="list">
           <h3 class="list-title">In Progress</h3>
-
-          <ul class="list-items">
-            <li class="draggable" draggable="true">
-              <div class="issue-header">
-                <option class="low">Low</option>
-                <div>
-                  <button class="edit-issue"><i class="fa fa-edit"></i></button>
-                  <button class="close-issue">&times;</button>
-                </div>
-              </div>
-              <div>In progress 1</div>
-              <div class="issue-footer">
-                <div>Assignee:</div>
-                <option value="Assignee">Assignee</option>
-              </div>
-            </li>
-          </ul>
+          <ul class="list-items" id="inprogress"></ul>
         </div>
 
         <div class="list">
           <h3 class="list-title">Completed</h3>
-
-          <ul class="list-items">
-            <li class="draggable" draggable="true">
-              <div class="issue-header">
-                <option class="important">Important</option>
-                <div>
-                  <button class="edit-issue"><i class="fa fa-edit"></i></button>
-                  <button class="close-issue">&times;</button>
-                </div>
-              </div>
-              <div>Completed 1</div>
-              <div class="issue-footer">
-                <div>Assignee:</div>
-                <option value="Assignee">Assignee</option>
-              </div>
-            </li>
-            <li class="draggable" draggable="true">
-              <div class="issue-header">
-                <option class="normal">Normal</option>
-                <div>
-                  <button class="edit-issue"><i class="fa fa-edit"></i></button>
-                  <button class="close-issue">&times;</button>
-                </div>
-              </div>
-              <div>Completed 2</div>
-              <div class="issue-footer">
-                <div>Assignee:</div>
-                <option value="Assignee">Assignee</option>
-              </div>
-            </li>
-          </ul>
+          <ul class="list-items" id="completed"></ul>
         </div>
       </section>
     </div>

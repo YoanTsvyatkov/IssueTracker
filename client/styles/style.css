@@ -156,6 +156,7 @@ li {
   background-color: whitesmoke;
   max-height: calc(100vh - 13rem);
   overflow-y: auto;
+  min-height: 250px;
   padding: 0.3rem 0.5rem;
   border-top-left-radius: 0.3rem;
   border-top-right-radius: 0.3rem;
