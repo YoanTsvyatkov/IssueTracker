@@ -11,7 +11,7 @@ userController.get('/user', verifyToken, (req, res) => {
             res.send(users);
         })
         .catch((err) => {
-            res.sendCode(500);
+            res.sendStatus(500);
         })
 })
 

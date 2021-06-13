@@ -1,4 +1,6 @@
 import mongoose from "mongoose";
+import Project from "./project.js";
+import User from "./user.js";
 
 const { Schema, model } = mongoose;
 
@@ -12,8 +14,8 @@ const issueSchema = new Schema({
         required: true
     },
     projectId: {
-        type: String,
-        required: true
+        type: Schema.Types.ObjectId,
+        ref: Project
     },
     status : {
         type: String,
@@ -21,7 +23,8 @@ const issueSchema = new Schema({
     },
     assignee: {
         assigneeId:{
-            type: String
+            type: Schema.Types.ObjectId,
+            ref: User
         },
         firstName: {
             type: String
