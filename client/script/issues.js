@@ -86,7 +86,7 @@ async function loadUsers() {
       addAssignee(user);
     });
   } catch (err) {
-    console.log(err);
+
   }
 }
 
@@ -142,8 +142,6 @@ async function updateIssue(issue, issueId) {
 
     errorCheck(result);
 
-    const js = await result.json();
-    console.log(js);
   } catch (err) {
     alert("Something went wrong");
   }
@@ -189,11 +187,11 @@ for (let i = 0; i < issueStatusList.length; i++) {
 }
 
 function dragEnter() {
-  //console.log("Drag enter");
+
 }
 
 function dragLeave() {
-  //console.log("Drag leave");
+
 }
 
 //========================================================
@@ -311,7 +309,6 @@ function createIssue(newIssue) {
   });
   //////////////////////DRAG EVENTS////////////////////////
 
-  console.log(issue);
   document.getElementById(newIssue.status).appendChild(issue);
 }
 
@@ -371,7 +368,6 @@ function startEditingIssue(issue) {
   addIssueButton.style.backgroundColor = "Green";
   priority.value = getIssuePriority(editedIssue).value;
   input.value = getIssueBody(editedIssue).textContent;
-  console.log(getAssignee(editedIssue).text);
   assignee.value = getAssignee(editedIssue).text;
 }
 

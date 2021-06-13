@@ -65,7 +65,6 @@ async function displayProjects() {
       addProject(element);
     });
   } catch (err) {
-    console.log(err);
     alert("Something went wrong");
   }
 }
@@ -181,7 +180,6 @@ projectEditForm.addEventListener("submit", async (event) => {
 
     if (result.status == 200) {
       const json = await result.json();
-      console.log(json);
       selectedProjectDiv.children[0].innerHTML = json.projectName;
 
       if (json.image) {
@@ -197,7 +195,6 @@ projectEditForm.addEventListener("submit", async (event) => {
     }
   } catch (error) {
     //TODO show form data error
-    console.log(error);
     alert("Something went wrong");
   }
 });
