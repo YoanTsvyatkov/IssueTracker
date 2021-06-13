@@ -1,4 +1,3 @@
-//"use strict";
 
 let issueStatusList = document.querySelectorAll(".list-items");
 let issues = document.querySelectorAll(".draggable");
@@ -8,6 +7,7 @@ let editIssueButtons = document.querySelectorAll(".edit-issue");
 let priority = document.getElementById("priority");
 let input = document.querySelector(".new-task");
 let assignee = document.getElementById("assignee");
+
 
 let draggableIssue = null;
 let editedIssueId = null;
@@ -24,6 +24,7 @@ document
   .addEventListener("click", function () {
     localStorage.removeItem("token");
     localStorage.removeItem("projectId");
+    window.location.href = "index.html";
   });
 
 document.getElementById("to-projects").addEventListener("click", function () {
@@ -41,6 +42,8 @@ if (!projectId) {
 function errorCheck(result) {
   if (result.status == 401 || result.status == 403) {
     localStorage.removeItem("token");
+    localStorage.removeItem("projectId");
+    window.location.href = "index.html";
   }
 }
 
@@ -59,10 +62,9 @@ async function loadIssues() {
 
     issueList.forEach((issue) => {
       createIssue(issue);
-      //console.log(issue);
     });
   } catch (err) {
-    //console.log(err);
+
   }
 }
 loadIssues();
@@ -115,7 +117,13 @@ async function addIssue(issue) {
       },
       body: JSON.stringify(issue),
     });
+
     errorCheck(result);
+
+    const json = await result.json();
+
+    createIssue(json);
+    
   } catch (err) {
     alert("Something went wrong");
   }
@@ -149,7 +157,7 @@ async function updateIssue(issue, issueId) {
 
 function addAssignee(user) {
   const newAssignee = document.createElement("option");
-  newAssignee.value = user.id;
+  newAssignee.value = user._id;
   newAssignee.appendChild(document.createTextNode(user.name));
   assignee.appendChild(newAssignee);
 }
@@ -200,7 +208,7 @@ addIssueButton.addEventListener("click", function () {
   } else {
     if (!input.value.isEmpty()) {
       addIssue(createIssueObject());
-      createIssue(createIssueObject());
+      // createIssue(createIssueObject());
       clearFields();
     }
   }
@@ -287,8 +295,6 @@ function createIssue(newIssue) {
   issue.appendChild(issueBody);
   issue.appendChild(issueFooter);
 
-  console.log("here");
-
   //////////////////////DRAG EVENTS////////////////////////
   issue.addEventListener("dragstart", function () {
     draggableIssue = this;
@@ -298,7 +304,7 @@ function createIssue(newIssue) {
     const updatedBody = {
       status: `${issue.parentElement.id}`,
     };
-    //console.log(newIssue.id);
+
     updateIssue(updatedBody, newIssue._id);
 
     draggableIssue = null;
@@ -310,9 +316,11 @@ function createIssue(newIssue) {
 }
 
 function createIssueObject() {
-  const fullName =
+  const name = assignee.options[assignee.selectedIndex].textContent
+  const nameArray =
     assignee.options[assignee.selectedIndex].textContent.split(" ");
-  if (assignee.value === "") {
+
+  if (name === "Unassigned") {
     return {
       status: "nostatus",
       title: `${input.value}`,
@@ -326,10 +334,10 @@ function createIssueObject() {
       priority: `${priority.value}`,
       projectId: projectId,
       assignee: {
-        assigneeId: `${assignee.value}`,
-        firstName: `${fullName[0]}`,
-        lastName: `${fullName[1] || ""}`,
-      },
+        assigneeId: `${assignee.options[assignee.selectedIndex].value}`,
+        firstName: `${nameArray[0]}`,
+        lastName: `${nameArray[1] || ""}`,
+      },  
     };
   }
 }
@@ -363,7 +371,8 @@ function startEditingIssue(issue) {
   addIssueButton.style.backgroundColor = "Green";
   priority.value = getIssuePriority(editedIssue).value;
   input.value = getIssueBody(editedIssue).textContent;
-  assignee.value = getAssignee(editedIssue).textContent;
+  console.log(getAssignee(editedIssue).text);
+  assignee.value = getAssignee(editedIssue).text;
 }
 
 function endEditing() {
@@ -406,7 +415,7 @@ function endEditing() {
 
 function clearEdit() {
   editing = false;
-  addIssueButton.textContent = "+ Add Issue";
+  addIssueButton.textContent = "Add Issue";
   addIssueButton.style.backgroundColor = "#2e2eff";
   clearFields();
 

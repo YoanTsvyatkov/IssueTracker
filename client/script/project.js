@@ -8,6 +8,8 @@ const projectImage = document.getElementById("project-image");
 
 if (token == null) {
   window.location.href = "index.html";
+}else{
+  displayProjects();
 }
 
 //Variable that will be used when editing project
@@ -71,6 +73,7 @@ async function displayProjects() {
 function errorCheck(result) {
   if (result.status == 401 || result.status == 403) {
     localStorage.removeItem("token");
+    window.location.href = "index.html";
   }
 }
 
@@ -178,7 +181,9 @@ projectEditForm.addEventListener("submit", async (event) => {
 
     if (result.status == 200) {
       const json = await result.json();
+      console.log(json);
       selectedProjectDiv.children[0].innerHTML = json.projectName;
+
       if (json.image) {
         selectedProjectDiv.children[1].setAttribute(
           "src",
@@ -196,5 +201,3 @@ projectEditForm.addEventListener("submit", async (event) => {
     alert("Something went wrong");
   }
 });
-
-displayProjects();

@@ -29,7 +29,7 @@ issueController.post("/issue", verifyToken, (req, res) => {
 
   issue.save()
     .then(() => {
-      res.status(201).send(issueDocument)
+      res.status(201).send(issue)
     })
     .catch(err => {
       res.sendStatus(500);
